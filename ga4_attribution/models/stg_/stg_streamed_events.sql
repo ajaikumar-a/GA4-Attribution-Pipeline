@@ -17,7 +17,7 @@ with buffer as (
         timestamp_micros(cast(event_timestamp as int64)) as event_ts, 
         date(timestamp_micros(cast(event_timestamp as int64))) as event_date
     from 
-        '{{var('project_id')}}.ga4_models.stream_events_buffer'
+        'ga4-attribution-pipeline.ga4_models.stream_events_buffer'
 )
 select 
     *
