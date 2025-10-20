@@ -16,8 +16,8 @@ BQ_TABLE = f"{PROJECT}.{DATASET}.{TABLE}"
 client = bigquery.Client(project = PROJECT)
 print("Successfully initialized BigQuery client.")
 
-start_ts = datetime.now() - timedelta(days = 5)
-time_increment = timedelta(minutes = 1)
+start_ts = datetime.now() + timedelta(days = 5)
+time_increment = timedelta(minutes = 5)
 
 # Function: Generate demo events
 def generate_events(i):

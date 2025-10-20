@@ -1,21 +1,21 @@
 {{config(
     materialized = "incremental", 
     unique_key = "event_id", 
-    partition_key = {"field": "event_date", "data_type": "date"}
+    partition_key = {"field": "event_timestamp", "data_type": "timestamp"}
 )}}
 
 -- Read buffer table
 with buffer as (
     select 
-        event_id, 
-        event_timestamp, 
+        user_id, 
         user_pseudo_id, 
+        event_id, 
         event_name, 
-        source, 
-        medium, 
+        event_timestamp, -- convert event_timestamp into readable format
+        traffic_source, 
+        traffic_medium, 
         campaign, 
-        timestamp_micros(cast(event_timestamp as int64)) as event_ts, 
-        date(timestamp_micros(cast(event_timestamp as int64))) as event_date
+        insert_timestamp
     from 
         `ga4-attribution-pipeline.ga4_models.stream_events_buffer`
 )
@@ -24,8 +24,8 @@ select
 from 
     buffer
 
-{% if is_incremental() %}
-    where event_id is not null and event_ts > (
-        select coalesce(max(event_ts), timestamp('1970-01-01')) from {{this}}
-    )
-{% endif %}
+    {% if is_incremental() %}
+        where event_id is not null and event_timestamp > (
+            (select max(event_timestamp) from {{this}})
+        )
+    {% endif %}

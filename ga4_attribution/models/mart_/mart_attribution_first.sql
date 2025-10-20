@@ -7,7 +7,8 @@ select
   session_number, 
   session_start_ts, 
   first_source, 
-  first_medium
+  first_medium, 
+  first_campaign
 from 
   {{ref('int_sessions')}}
 )

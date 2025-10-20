@@ -7,11 +7,12 @@ with int_events as (
     user_pseudo_id, 
     event_id, 
     event_name, 
-    timestamp_micros(cast(event_timestamp as int64)) as event_ts, -- convert event_timestamp into readable format
+    event_timestamp as event_ts,
     traffic_source, 
-    traffic_medium
+    traffic_medium, 
+    campaign
   from 
-    {{ref('stg_ga4_events')}}
+    {{ref('stg_streamed_events')}}
 ), 
 -- Get previous event details
 lag_events as (
@@ -37,7 +38,7 @@ sessions as (
     session_number, 
     min(event_ts) as session_start_ts, 
     max(event_ts) as session_end_ts, 
-    array_agg(struct(event_ts, event_id, traffic_source, traffic_medium, event_name) order by event_ts) as events
+    array_agg(struct(event_ts, event_id, traffic_source, traffic_medium, event_name, campaign) order by event_ts) as events
   from 
     sessionized 
   group by 
@@ -53,6 +54,8 @@ select
   (select e.traffic_medium from unnest(events) e order by e.event_ts limit 1) as first_medium,
   (select e.traffic_source from unnest(events) e order by e.event_ts desc limit 1) as last_source,
   (select e.traffic_medium from unnest(events) e order by e.event_ts desc limit 1) as last_medium,
+  (select e.campaign from unnest(events) e order by e.event_ts limit 1) as first_campaign,
+  (select e.campaign from unnest(events) e order by e.event_ts limit 1) as last_campaign,
   events
 from 
   sessions

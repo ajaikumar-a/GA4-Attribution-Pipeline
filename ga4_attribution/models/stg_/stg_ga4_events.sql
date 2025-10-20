@@ -17,8 +17,8 @@ with events as (
     (select value.string_value from unnest(event_params) where key = 'campaign') as campaign
   from 
     `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
-  where 
-    _TABLE_SUFFIX between '20201101' and '20210131'
+--   where 
+--     _TABLE_SUFFIX between '20201101' and '20210131'
 )
 select 
   event_date, 

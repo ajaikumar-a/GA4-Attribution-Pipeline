@@ -31,3 +31,4 @@ models:
       - name: session_date
         tests: 
           - not_null
+      
