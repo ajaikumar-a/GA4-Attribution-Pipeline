@@ -61,6 +61,8 @@ Common metrics:
 - First-touch and Last-touch sessions
 - Last 1 month sessions timeline
 
+Dashboard link: https://lookerstudio.google.com/reporting/e26cc577-e1d1-484c-8c29-2354c0d029b5
+
 #### Automation
 The full pipeline can be scheduled using Windows Task Scheduler.
 
