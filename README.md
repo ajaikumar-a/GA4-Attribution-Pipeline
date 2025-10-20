@@ -15,6 +15,8 @@ mart_ (Analytics Mart) - Generates attribution metrics (first-touch, last-touch)
 This project includes a Python-base streaming demo to insert live events into BigQuery and continuously update the dashboard. 
 
 #### Architecture
+<img width="599" height="610" alt="architecture_diagram" src="https://github.com/user-attachments/assets/43b1514b-6946-415e-ade8-75dfcecc0d43" />
+
 
 
 BigQuery dataset: ga4-attribution-pipeline.ga4_models
@@ -50,7 +52,10 @@ This will:
 - Recalculate attribution metrics.
 
 #### Dashboard
-You can connect your BI tool(Eg: Looker Studio, Power BI, Tableau, etc.) to BigQuery.
+<img width="1905" height="836" alt="looker_dashboard" src="https://github.com/user-attachments/assets/1316e38b-b747-491c-b4b4-72950c9f24f5" />
+
+
+Connected Looker Studio with BigQuery.
 
 Suggested tables:
 ```mart_attribution_first```
